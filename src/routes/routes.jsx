@@ -7,6 +7,7 @@ import Football from "../pages/navbar/Football"
 import Genre from "../pages/navbar/Genre"
 import MovieDetailPage from "../layout/MovieDetailPage"
 import Watchingtv from "../layout/Watchingtv"
+import Banner from "../features/Banner"
 const publicRouter = [
     { path: "/", element: <Home /> },
     { path: "/Series", element: <Series /> },
@@ -17,7 +18,6 @@ const publicRouter = [
     { path: "/Genre", element: <Genre /> },
     { path: "/phim/:slug/:id", element: <MovieDetailPage /> },
     { path: "/watchingtv/:slug/:tap", element: <Watchingtv /> },
-
 ]
 
 const privateRouter = [

@@ -7,23 +7,22 @@ import { Link } from 'react-router-dom';
 
 
 const responsive = {
-    superLargeDesktop: {
-        // the naming can be any, depends on you.
-        breakpoint: { max: 4000, min: 3000 },
-        items: 5
-    },
-    desktop: {
-        breakpoint: { max: 3000, min: 1024 },
-        items: 3
-    },
-    tablet: {
-        breakpoint: { max: 1024, min: 464 },
-        items: 2 
-    },
-    mobile: {
-        breakpoint: { max: 464, min: 0 },
-        items: 1
-    }
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 3000 },
+    items: 11 // Tăng lên cho màn hình rất lớn
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 10 // Tăng số lượng phim hiển thị
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
 };
 
 const Banner = ({ title, data }) => {
@@ -47,7 +46,7 @@ const Banner = ({ title, data }) => {
 
   // Custom arrows cho carousel
   const CustomLeftArrow = ({ onClick }) => (
-    <button 
+    <button
       onClick={() => {
         onClick();
         // Tính toán index mới khi click left arrow
@@ -64,7 +63,7 @@ const Banner = ({ title, data }) => {
   );
 
   const CustomRightArrow = ({ onClick }) => (
-    <button 
+    <button
       onClick={() => {
         onClick();
         // Tính toán index mới khi click right arrow
@@ -90,8 +89,8 @@ const Banner = ({ title, data }) => {
   return (
     <section
       className="relative w-full h-screen bg-cover bg-center"
-     style={{ 
-        backgroundImage: `url(${import.meta.env.VITE_IMG_URL}${selectedMovie.poster_url || selectedMovie.thumb_url || bannerIcon})` 
+      style={{
+        backgroundImage: `url(${import.meta.env.VITE_IMG_URL}${selectedMovie.poster_url || selectedMovie.thumb_url || bannerIcon})`
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80"></div>
@@ -111,18 +110,18 @@ const Banner = ({ title, data }) => {
             <span key={index} className="bg-black/80 px-[10px] py-[5px] rounded-[15px] text-[0.9em]">
               {cat.name}
             </span>
-          ))} 
+          ))}
         </div>
-
+        
         <div className="my-4 flex items-center space-x-4">
-           <Link to={`/movie/${selectedMovie.slug}`}>
-           <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-green-600 text-white hover:opacity-90 cursor-pointer flex items-center space-x-2">
-            <i className="fa-solid fa-play"></i>
-            <span>Play</span>
-          </button>
-           </Link>
+          <Link  to={`/phim/${selectedMovie.slug}/${selectedMovie._id}`} key={selectedMovie._id}>
+            <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-green-600 text-white hover:opacity-90 cursor-pointer flex items-center space-x-2">
+              <i className="fa-solid fa-play"></i>
+              <span>Play</span>
+            </button>
+          </Link>
 
-            <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-[rgba(100,100,100,0.7)] text-white font-bold hover:opacity-90 cursor-pointer flex items-center justify-center">
+          <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-[rgba(100,100,100,0.7)] text-white font-bold hover:opacity-90 cursor-pointer flex items-center justify-center">
             +
           </button>
         </div>
@@ -136,8 +135,8 @@ const Banner = ({ title, data }) => {
       </div>
 
       <section className="absolute bottom-40 w-full h-[200px] px-12 z-10">
-        <Carousel responsive={responsive} 
-        className="flex space-x-4 h-[350px] items-center pb-4 scrollbar-hide"
+        <Carousel responsive={responsive}
+          className="flex space-x-4 h-[350px] items-center pb-4 scrollbar-hide"
 
           customLeftArrow={<CustomLeftArrow />}
           customRightArrow={<CustomRightArrow />}
@@ -146,12 +145,12 @@ const Banner = ({ title, data }) => {
           keyBoardControl={true}
           containerClass="carousel-container"
           itemClass="max-w-[190px]"
-        >  
-          {data && data.length > 0 && data.map((item,index) => {
+        >
+          {data && data.length > 0 && data.map((item, index) => {
             return (
-              <div  key={ index} className="flex space-x-4 items-center pb-4 scrollbar-hide">
+              <div key={index} className="flex space-x-4 items-center pb-4 scrollbar-hide">
                 <div className="flex-shrink-0 w-[170px] h-[280px]">
-                  <img src={`${import.meta.env.VITE_IMG_URL}${item.poster_url||item.thumb_url}`} alt="The Witcher" className="w-full h-full object-cover rounded-md shadow-lg mb-2" />
+                  <img src={`${import.meta.env.VITE_IMG_URL}${item.poster_url || item.thumb_url}`} alt="The Witcher" className="w-full h-full object-cover rounded-md shadow-lg mb-2" />
                   <h3 className="text-white text-sm font-semibold truncate hover:text-clip hover:whitespace-normal">{item.name}</h3>
                 </div>
               </div>
