@@ -351,8 +351,8 @@ const Watchingtv = () => {
             <div className="mt-8">
               <h2 className="text-sm font-semibold uppercase text-gray-400 mb-2">ĐỔI SERVER (NẾU LAG)</h2>
               <div className="flex items-center gap-2">
-                <button className="bg-red-600 text-white font-bold px-4 py-2 rounded-md">PPRO#1</button>
-                <button className="bg-zinc-700 hover:bg-zinc-600 text-white font-bold px-4 py-2 rounded-md">PNA#2</button>
+                <button className="bg-red-600 text-white font-bold px-4 py-2 rounded-md">VIP1</button>
+                <button className="bg-zinc-700 hover:bg-zinc-600 text-white font-bold px-4 py-2 rounded-md">VIP2</button>
               </div>
             </div>
 

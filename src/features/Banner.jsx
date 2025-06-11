@@ -1,8 +1,10 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import bannerIcon from '../assets/th.jpg';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { useData } from '../pages/data/fakeListfilm'
+import { Link } from 'react-router-dom';
+
 
 const responsive = {
     superLargeDesktop: {
@@ -16,7 +18,7 @@ const responsive = {
     },
     tablet: {
         breakpoint: { max: 1024, min: 464 },
-        items: 2
+        items: 2 
     },
     mobile: {
         breakpoint: { max: 464, min: 0 },
@@ -25,33 +27,102 @@ const responsive = {
 };
 
 const Banner = ({ title, data }) => {
+  const { currentBannerVideo, loading } = useData();
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Set movie đầu tiên làm mặc định khi data load xong
+  useEffect(() => {
+    if (data && data.length > 0 && !selectedMovie) {
+      setSelectedMovie(data[1]);
+      setCurrentIndex(0);
+    }
+  }, [data, selectedMovie]);
+
+  // Handle click trên poster để thay đổi movie được chọn
+  const handleMovieClick = (movie, index) => {
+    setSelectedMovie(movie);
+    setCurrentIndex(index);
+  };
+
+  // Custom arrows cho carousel
+  const CustomLeftArrow = ({ onClick }) => (
+    <button 
+      onClick={() => {
+        onClick();
+        // Tính toán index mới khi click left arrow
+        const newIndex = currentIndex > 0 ? currentIndex - 1 : data.length - 1;
+        setCurrentIndex(newIndex);
+        setSelectedMovie(data[newIndex]);
+      }}
+      className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-200"
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+  );
+
+  const CustomRightArrow = ({ onClick }) => (
+    <button 
+      onClick={() => {
+        onClick();
+        // Tính toán index mới khi click right arrow
+        const newIndex = currentIndex < data.length - 1 ? currentIndex + 1 : 0;
+        setCurrentIndex(newIndex);
+        setSelectedMovie(data[newIndex]);
+      }}
+      className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full transition-all duration-200"
+    >
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  );
+
+  if (loading || !selectedMovie || !data || data.length === 0) {
+    return (
+      <div className="w-full h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-white">Đang tải...</div>
+      </div>
+    );
+  }
   return (
     <section
       className="relative w-full h-screen bg-cover bg-center"
-      style={{ backgroundImage: `url(${bannerIcon})` }}
+     style={{ 
+        backgroundImage: `url(${import.meta.env.VITE_IMG_URL}${selectedMovie.poster_url || selectedMovie.thumb_url || bannerIcon})` 
+      }}
     >
       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80"></div>
+
       <div className='absolute z-10 text-white top-24 left-0 w-[50%] mt-24 px-24'>
-        <h1 className="text-5xl font-bold" id="title"> Hắc thần thoại ngộ không</h1>
+        <h1 className="text-5xl font-bold" id="title">{selectedMovie.name || selectedMovie.origin_name}</h1>
         <div className="mb-1.5 cursor-pointer flex space-x-0.5">
-          <span className="text-2xl text-amber-500"><i className="fa-solid fa-star"></i></span>
-          <span className="text-2xl text-amber-500"><i className="fa-solid fa-star"></i></span>
-          <span className="text-2xl text-amber-500"><i className="fa-solid fa-star"></i></span>
-          <span className="text-2xl text-amber-500"><i className="fa-solid fa-star"></i></span>
-          <span className="text-2xl text-amber-500"><i className="fa-solid fa-star"></i></span>
+          {[...Array(5)].map((_, i) => (
+            <span key={i} className="text-2xl text-amber-500">
+              <i className="fa-solid fa-star"></i>
+            </span>
+          ))}
+
         </div>
         <div className="my-3.5 flex space-x-2">
-          <span className="bg-black/80 px-[10px] py-[5px] rounded-[15px] text-[0.9em]">Action</span>
-          <span className="bg-black/80 px-[10px] py-[5px] rounded-[15px] text-[0.9em]">Adventure</span>
-          <span className="bg-black/80 px-[10px] py-[5px] rounded-[15px] text-[0.9em]">Fantasy</span>
+          {selectedMovie.category && selectedMovie.category.slice(0, 3).map((cat, index) => (
+            <span key={index} className="bg-black/80 px-[10px] py-[5px] rounded-[15px] text-[0.9em]">
+              {cat.name}
+            </span>
+          ))} 
         </div>
 
         <div className="my-4 flex items-center space-x-4">
-          <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-green-600 text-white hover:opacity-90 cursor-pointer flex items-center space-x-2">
+           <Link to={`/movie/${selectedMovie.slug}`}>
+           <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-green-600 text-white hover:opacity-90 cursor-pointer flex items-center space-x-2">
             <i className="fa-solid fa-play"></i>
             <span>Play</span>
           </button>
-          <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-[rgba(100,100,100,0.7)] text-white font-bold hover:opacity-90 cursor-pointer flex items-center justify-center">
+           </Link>
+
+            <button className="px-[20px] py-[12px] rounded-[5px] text-[1.2em] bg-[rgba(100,100,100,0.7)] text-white font-bold hover:opacity-90 cursor-pointer flex items-center justify-center">
             +
           </button>
         </div>
@@ -65,20 +136,17 @@ const Banner = ({ title, data }) => {
       </div>
 
       <section className="absolute bottom-40 w-full h-[200px] px-12 z-10">
-        {/* <Carousel responsive={responsive} className="flex space-x-4 h-[350px] items-center pb-4 scrollbar-hide">
-            {data && data.length > 0 && data.map((item,index) => {
-            return (
-              <div  key={item.id || index} className="flex space-x-4 items-center pb-4 scrollbar-hide">
-                <div className="flex-shrink-0 w-[170px] h-[280px]">
-                  <img src={`${import.meta.env.VITE_IMG_URL}${item.poster_url||item.thumb_url}`} alt="The Witcher" className="w-full h-full object-cover rounded-md shadow-lg mb-2" />
-                  <h3 className="text-white text-sm font-semibold truncate hover:text-clip hover:whitespace-normal">{item.name}</h3>
-                </div>
-              </div>
-            )
-          })}
-        </Carousel> */}
-        <div className="flex space-x-4 h-[350px] items-center pb-4 scrollbar-hide">
-            
+        <Carousel responsive={responsive} 
+        className="flex space-x-4 h-[350px] items-center pb-4 scrollbar-hide"
+
+          customLeftArrow={<CustomLeftArrow />}
+          customRightArrow={<CustomRightArrow />}
+          infinite={true}
+          autoPlay={false}
+          keyBoardControl={true}
+          containerClass="carousel-container"
+          itemClass="max-w-[190px]"
+        >  
           {data && data.length > 0 && data.map((item,index) => {
             return (
               <div  key={ index} className="flex space-x-4 items-center pb-4 scrollbar-hide">
@@ -89,7 +157,7 @@ const Banner = ({ title, data }) => {
               </div>
             )
           })}
-        </div>
+        </Carousel>
       </section>
     </section>
   );

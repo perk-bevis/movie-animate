@@ -1,11 +1,11 @@
 import React from 'react'
+import bannerIcon from '../assets/th1.jpg';
 
 const MainNews = () => {
    return(
         <section className="text-white py-8 md:py-12 px-4 md:px-12 bg-black">
         <div className="container mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
-                {/* Popular Column */}
                 <div className="lg:col-span-3 space-y-6">
                     <h3 className="text-xl font-semibold uppercase border-l-4 border-red-500 pl-3 mb-4">Phổ biến</h3>
                     <ul className="space-y-3">
@@ -67,12 +67,10 @@ const MainNews = () => {
                         </li>
                     </ul>
                 </div>
-
-                {/* Main News Column */}
                 <div className="lg:col-span-6 space-y-6">
                     <h3 className="text-xl font-semibold uppercase border-l-4 border-red-500 pl-3 mb-4">Tin tức chính</h3>
                     <div className="bg-gray-800 rounded-lg shadow-xl overflow-hidden group">
-                        <img src="https://placehold.co/600x400/333333/FFFFFF?text=News+Img" alt="Main news title" className="w-full h-64 md:h-80 object-cover group-hover:opacity-90 transition-opacity" />
+                        <img src={bannerIcon} alt="Main news title" className="w-full h-64 md:h-80 object-cover group-hover:opacity-90 transition-opacity" />
                         <div className="p-4 md:p-6">
                             <span className="text-xs text-red-400 uppercase font-semibold">TV Review</span>
                             <h4 className="text-xl md:text-2xl font-bold my-2 hover:text-red-400 transition-colors cursor-pointer">The series 'It will hurt': Ben Whishaw as a tortured obstetrician-gynecologist</h4>
@@ -81,21 +79,21 @@ const MainNews = () => {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden group flex items-start space-x-3 p-3">
-                            <img src="https://placehold.co/200x120/444444/FFFFFF?text=News" alt="Sub article 1" className="w-24 h-20 object-cover rounded flex-shrink-0 group-hover:opacity-90 transition-opacity" />
+                            <img src={bannerIcon} alt="Sub article 1" className="w-24 h-20 object-cover rounded flex-shrink-0 group-hover:opacity-90 transition-opacity" />
                             <div>
                                 <span className="text-xs text-red-400 uppercase font-semibold">Movies</span>
                                 <h5 className="text-sm font-semibold mt-1 hover:text-red-400 transition-colors cursor-pointer">'Death on the Nile': Director Branagh spoils the film</h5>
                             </div>
                         </div>
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden group flex items-start space-x-3 p-3">
-                            <img src="https://placehold.co/200x120/444444/FFFFFF?text=News" alt="Sub article 2" className="w-24 h-20 object-cover rounded flex-shrink-0 group-hover:opacity-90 transition-opacity" />
+                            <img src={bannerIcon} alt="Sub article 2" className="w-24 h-20 object-cover rounded flex-shrink-0 group-hover:opacity-90 transition-opacity" />
                             <div>
                                 <span className="text-xs text-red-400 uppercase font-semibold">Series</span>
                                 <h5 className="text-sm font-semibold mt-1 hover:text-red-400 transition-colors cursor-pointer">'Jack Reacher': The perfect adaptation of the cult thriller</h5>
                             </div>
                         </div>
                         <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden group flex items-start space-x-3 p-3">
-                            <img src="https://placehold.co/200x120/444444/FFFFFF?text=News" alt="Sub article 3" className="w-24 h-20 object-cover rounded flex-shrink-0 group-hover:opacity-90 transition-opacity" />
+                            <img src={bannerIcon} alt="Sub article 3" className="w-24 h-20 object-cover rounded flex-shrink-0 group-hover:opacity-90 transition-opacity" />
                             <div>
                                 <span className="text-xs text-red-400 uppercase font-semibold">Biopic</span>
                                 <h5 className="text-sm font-semibold mt-1 hover:text-red-400 transition-colors cursor-pointer">'King Richard': A laudatory biopic about fatherhood</h5>
@@ -103,14 +101,12 @@ const MainNews = () => {
                         </div>
                     </div>
                 </div>
-
-                {/* New Video Column */}
                 <div className="lg:col-span-3 space-y-6">
                     <h3 className="text-xl font-semibold uppercase border-l-4 border-red-500 pl-3 mb-4">Video Mới</h3>
                     <ul className="space-y-4">
                         <li className="flex items-center space-x-3 group cursor-pointer bg-gray-800 p-2 rounded-lg hover:bg-gray-700 transition-colors">
                             <div className="relative flex-shrink-0">
-                                <img src="https://placehold.co/250x150/222222/FFFFFF?text=Video" alt="Video 1" className="w-32 h-20 object-cover rounded-md" />
+                                <img src={bannerIcon} alt="Video 1" className="w-32 h-20 object-cover rounded-md" />
                                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                     <i className="fa-solid fa-play text-white text-2xl"></i>
                                 </div>
@@ -122,7 +118,7 @@ const MainNews = () => {
                         </li>
                         <li className="flex items-center space-x-3 group cursor-pointer bg-gray-800 p-2 rounded-lg hover:bg-gray-700 transition-colors">
                             <div className="relative flex-shrink-0">
-                                <img src="https://placehold.co/250x150/222222/FFFFFF?text=Video" alt="Video 2" className="w-32 h-20 object-cover rounded-md" />
+                                <img src={bannerIcon} alt="Video 2" className="w-32 h-20 object-cover rounded-md" />
                                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                     <i className="fa-solid fa-play text-white text-2xl"></i>
                                 </div>
@@ -134,7 +130,7 @@ const MainNews = () => {
                         </li>
                         <li className="flex items-center space-x-3 group cursor-pointer bg-gray-800 p-2 rounded-lg hover:bg-gray-700 transition-colors">
                             <div className="relative flex-shrink-0">
-                                <img src="https://placehold.co/250x150/222222/FFFFFF?text=Video" alt="Video 3" className="w-32 h-20 object-cover rounded-md" />
+                                <img src={bannerIcon} alt="Video 3" className="w-32 h-20 object-cover rounded-md" />
                                 <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                     <i className="fa-solid fa-play text-white text-2xl"></i>
                                 </div>

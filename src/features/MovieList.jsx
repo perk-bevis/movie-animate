@@ -101,6 +101,7 @@ const MovieList = ({ title, data }) => {
                 </Carousel>
             </div>
         </div>
+        
     )
 }
 MovieList.propTypes = {
