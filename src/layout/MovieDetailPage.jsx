@@ -67,7 +67,8 @@ const MovieDetailPage = () => {
 
                         <div className="lg:w-3/4">
                             <div className="relative bg-movie-hero rounded-lg shadow-xl p-6 md:p-10 min-h-[400px] md:min-h-[500px] flex items-end">
-                                <div className="absolute inset-0 bg-black opacity-50 rounded-lg"></div> <div className="relative z-10 flex flex-col md:flex-row gap-6">
+                                <div className="absolute inset-0 bg-black opacity-50 rounded-lg" style={{backgroundImage: `url(${movieDetails.thumb_url})`}}></div> 
+                                <div className="relative z-10 flex flex-col md:flex-row gap-6">
                                     <div className="w-full md:w-1/3 lg:w-1/4 flex-shrink-0">
                                         <img src={movieDetails.thumb_url} alt="Upcoming Movie" className="rounded-lg w-full" />
                                     </div>
@@ -109,9 +110,17 @@ const MovieDetailPage = () => {
 
                             <div className="bg-gray-800 p-4 mt-6 rounded-lg shadow">
                                 <span className="font-semibold mr-3">Tập mới nhất:</span>
-                                <a href="#" className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">Tập 21</a>
+                                {/* <a href="#" className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">Tập 21</a>
                                 <a href="#" className="px-3 py-1 bg-red-600 text-white rounded">Tập 20</a>
-                                <a href="#" className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">Tập 19</a>
+                                <a href="#" className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">Tập 19</a> */}
+                                {/* {episodes.map((ep, index) => {
+                                    <Link
+                                    key={index}
+                                    to={`/phim/${slug}/tap-${ep.name.replace(/\D/g, '')}`}
+                                    >
+                                    </Link>
+                                })} */}
+
                             </div>
 
                             <div className="bg-gray-800 mt-6 rounded-lg shadow">

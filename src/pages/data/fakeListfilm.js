@@ -38,6 +38,7 @@ export function useData(currentPage = 1) {
                 const data4 = await res4.json();
                 const data5 = await res5.json();
                 const data6 = await res6.json();
+                console.log(data2)
                 setMovies(data1.items || []);
                 setMovieSeries(data2.data?.items || []);
                 setMovieSingle(data3.data?.items || []);
