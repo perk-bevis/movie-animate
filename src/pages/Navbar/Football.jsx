@@ -2,8 +2,8 @@ import React from 'react'
 
 const Football = () => {
   return (
-    <div>
-      <h1>football page</h1>
+    <div className='flex justify-center items-center h-screen text-white text-2xl'>
+      <h1>Đang update</h1>
     </div>
   )
 }

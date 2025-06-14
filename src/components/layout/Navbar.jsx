@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 
-const Navbar = () => {
-  const activeLink = "text-white text-base pb-1 border-b-2";
-
+const Navbar = ( { onSearch }) => {
+  const activeLink = "text-white text-base pb-1 border-b-2 border-green-500 transition-colors duration-300";
+  const normalLink = "text-gray-400 hover:text-white text-base pb-1 border-b-2 border-transparent hover:border-green-500 transition-colors duration-300";
+  const [textSearch, setTextSearch] = useState('')
   return (
     <header className="fixed top-0 left-0 w-full bg-black bg-opacity-70 z-50 py-4 px-8 flex items-center justify-between">
       <div className="text-2xl font-bold text-red-600">CODE METECH</div>
@@ -20,7 +22,7 @@ const Navbar = () => {
             },
             {
               to: "/phim-le",
-              label: "Phim-le"
+              label: "Phim lẻ"
             },
             {
                to: "/tv-show",
@@ -32,80 +34,20 @@ const Navbar = () => {
             },
             {
                 to: "/the-thao",
-                Label: "Thể Thao"
-            },
-            {
-                to: "/the-loai",
-                Label: "Thể Loại"
-            },
+                label: "Thể Thao"
+            }
           ].map(({ to, label }, i) => {
             return (
               <li key={i}>
                 <NavLink
                   to={to}
-                  className="text-white text-base pb-1 border-b-2 border-green-500"
+                 className={({ isActive }) => isActive ? activeLink : normalLink}
                 >
                   {label}
                 </NavLink>
               </li>  
             );
           })}
-          {/* <li>
-            <NavLink
-              to="/"
-              className="text-white text-base pb-1 border-b-2 border-green-500"
-            >
-              Trang Chủ
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/phim-bo"
-              className="no-underline text-gray-400 hover:text-white text-base pb-1 hover:border-b-2 hover:border-green-500"
-            >
-              Phim Bộ
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/phim-le"
-              className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500"
-            >
-              Phim lẻ
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/tv-show"
-              className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500"
-            >
-              Tv Show
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/hoat-hinh"
-              className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500"
-            >
-              Hoạt hình
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/the-thao"
-              className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500"
-            >
-              Thể Thao
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/the-loai"
-              className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500"
-            >
-              Thể Loại
-            </NavLink>
-          </li> */}
         </ul>
       </nav>
       <div className="flex items-center space-x-4">
@@ -114,8 +56,9 @@ const Navbar = () => {
             type="text"
             placeholder="Tìm kiếm..."
             className="p-2 bg-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600"
+            onChange={(e) => setTextSearch(e.target.value)} value={textSearch} 
           />
-          <button className="p-2 bg-red-600 text-white hover:bg-red-700 transition duration-300 -ml-[7px]">
+          <button className="p-2 bg-red-600 text-white hover:bg-red-700 transition duration-300 -ml-[7px]" onClick={() => onSearch(textSearch)}>
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
@@ -131,5 +74,7 @@ const Navbar = () => {
     </header>
   );
 };
-
+Navbar.PropTypes = {
+  onSearch: PropTypes.func
+}
 export default Navbar;

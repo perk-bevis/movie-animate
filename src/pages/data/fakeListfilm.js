@@ -3,15 +3,13 @@ import React, { useEffect, useState } from 'react';
 // Custom hook để fetch data với pagination
 export function useData(currentPage = 1) {
     const [movies, setMovies] = useState([]);
-    console.log("movies1",movies)
     const [movieSeries, setMovieSeries] = useState([]);
     const [movieSingle, setMovieSingle] = useState([]);
     const [movieAnimated, setMovieAnimated] = useState([]);
     const [currentBannerVideo, setCurrentBannerVideo] = useState(null);
     const [tvshow, setTvshow] = useState([]);
-    console.log(tvshow)
     const [loading, setLoading] = useState(false);
-
+    const [movieSearch, setMovieSearch] = useState([])
     useEffect(() => {
         const fetchLatestMovies = async () => {
             setLoading(true);
@@ -57,6 +55,19 @@ export function useData(currentPage = 1) {
         fetchLatestMovies();
     }, [currentPage]);
 
+    const handleSearch = async (keywords) => {
+        setMovieSearch([]);
+        try {
+            const url = `https://phimapi.com/v1/api/tim-kiem?keyword=${keywords}&limit=50`;
+            const response = await fetch(url);
+            const datas = await response.json();
+            console.log(datas.data.items)
+            setMovieSearch(datas.data.items)
+        } 
+        catch (error) {
+            console.error("Lỗi khi tìm kiếm phim:", error);
+        }
+    };
     return {
         movies,
         movieSeries,
@@ -65,5 +76,7 @@ export function useData(currentPage = 1) {
         currentBannerVideo,
         tvshow,
         loading,
+        movieSearch,
+        handleSearch
     };
 }

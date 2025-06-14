@@ -277,7 +277,7 @@ const Watchingtv = () => {
               <ol className="flex items-center space-x-2 text-gray-400 flex-wrap">
                 <li><Link to="/" className="hover:text-white">Trang chủ</Link></li>
                 <li><span>&gt;</span></li>
-                <li><Link to={`/movie/${slug}`} className="hover:text-white">{movieDetails.name}</Link></li>
+                <li><Link to={`/phim/${slug}/${slug.episode_total}`} className="hover:text-white">{movieDetails.name}</Link></li>
                 <li><span>&gt;</span></li>
                 <li className="text-white">{currentEpisode?.name || 'Tập 01'}</li>
               </ol>
