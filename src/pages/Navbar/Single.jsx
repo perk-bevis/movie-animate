@@ -1,17 +1,13 @@
-// import React from 'react'
-// import bannerIcon from '../../assets/th1.jpg';
-import React, { useState } from 'react'; // Bỏ useEffect vì không cần nữa
+
+import React, { useState } from 'react'; 
 import { Link, useParams } from 'react-router-dom';
 
-// ====> FIX 1: THÊM 2 DÒNG IMPORT QUAN TRỌNG <====
 import { useData } from '../../pages/data/fakeListfilm';
-import Pagination from '../../components/ui/Pagination';
 const Single = () => {
   const { slug } = useParams();
 
   // 2. Tạo state cho việc phân trang, giống như trong App.js
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 60; // Hoặc một giá trị bạn lấy từ API sau này
 
   // 3. Gọi hook useData để lấy dữ liệu PHIM BỘ và trạng thái LOADING
   // Chúng ta chỉ cần `movieSeries` và `loading` từ hook này
@@ -111,7 +107,7 @@ const Single = () => {
 
             {movieSingle.map((movie) => (
               <div key={movie._id} className="group cursor-pointer">
-                <Link to={`/phim/${movie.slug}`}> {/* Thêm Link nếu cần */}
+                <Link to={`/phim/${movie.slug}`}> 
                   <div className="overflow-hidden rounded-lg">
                     <img
                       // src={movie.poster_url}

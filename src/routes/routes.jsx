@@ -1,4 +1,3 @@
-import Home from "../pages/navbar/Home"
 import Series from "../pages/Navbar/Series"
 import Single from "../pages/Navbar/Single"
 import Show from "../pages/Navbar/Show"
@@ -7,9 +6,7 @@ import Football from "../pages/navbar/Football"
 import Genre from "../pages/navbar/Genre"
 import MovieDetailPage from "../layout/MovieDetailPage"
 import Watchingtv from "../layout/Watchingtv"
-import Banner from "../features/Banner"
 const publicRouter = [
-    { path: "/", element: <Home /> },
     { path: "/phim-bo", element: <Series /> },
     { path: "/phim-le", element: <Single /> },
     { path: "/tv-show", element: <Show /> },

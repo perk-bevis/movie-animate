@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
     return (
@@ -10,25 +10,25 @@ const Navbar = () => {
             <nav className="hidden md:flex">
                 <ul className="flex space-x-8">
                     <li>
-                        <Link to="/" className="text-white text-base pb-1 border-b-2 border-green-500">Trang Chủ</Link>
+                        <NavLink to="/" className="text-white text-base pb-1 border-b-2 border-green-500">Trang Chủ</NavLink>
                     </li>
                     <li>
-                        <Link to="/phim-bo" className="no-underline text-gray-400 hover:text-white text-base pb-1 hover:border-b-2 hover:border-green-500">Phim Bộ</Link>
+                        <NavLink to="/phim-bo" className="no-underline text-gray-400 hover:text-white text-base pb-1 hover:border-b-2 hover:border-green-500">Phim Bộ</NavLink>
                     </li>
                     <li>
-                        <Link to="/phim-le" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Phim lẻ</Link>
+                        <NavLink to="/phim-le" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Phim lẻ</NavLink>
                     </li>
                     <li>
-                        <Link to="/tv-show" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Tv Show</Link>
+                        <NavLink to="/tv-show" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Tv Show</NavLink>
                     </li>
                     <li>
-                        <Link to="/hoat-hinh" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Hoạt hình</Link>
+                        <NavLink to="/hoat-hinh" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Hoạt hình</NavLink>
                     </li>
                     <li>
-                        <Link to="/the-thao" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Thể Thao</Link>
+                        <NavLink to="/the-thao" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Thể Thao</NavLink>
                     </li>
                     <li>
-                        <Link to="/the-loai" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Thể Loại</Link>
+                        <NavLink to="/the-loai" className="no-underline text-gray-400 text-base pb-1 hover:text-white hover:border-b-2 hover:border-green-500">Thể Loại</NavLink>
                     </li>
                 </ul>
             </nav>

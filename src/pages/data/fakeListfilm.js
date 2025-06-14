@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 // Custom hook để fetch data với pagination
 export function useData(currentPage = 1) {
     const [movies, setMovies] = useState([]);
+    console.log("movies1",movies)
     const [movieSeries, setMovieSeries] = useState([]);
     const [movieSingle, setMovieSingle] = useState([]);
     const [movieAnimated, setMovieAnimated] = useState([]);
     const [currentBannerVideo, setCurrentBannerVideo] = useState(null);
-    const [tvshow, setTvshow] = useState(null);
+    const [tvshow, setTvshow] = useState([]);
+    console.log(tvshow)
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -18,10 +20,10 @@ export function useData(currentPage = 1) {
                 
                 const url1 = `https://phimapi.com/danh-sach/phim-moi-cap-nhat?${pageParam}`;
                 const url2 = `https://phimapi.com/v1/api/danh-sach/phim-bo?limit=60&${pageParam}`;
-                const url3 = `https://phimapi.com/v1/api/danh-sach/phim-le?limit=10&${pageParam}`;
+                const url3 = `https://phimapi.com/v1/api/danh-sach/phim-le?limit=60&${pageParam}`;
                 const url4 = `https://phimapi.com/v1/api/danh-sach/hoat-hinh?limit=60&${pageParam}`;
-                const url5 = `https://phimapi.com/v1/api/danh-sach/tv-shows?limit=10&${pageParam}`;
-                const url6 = `https://phimapi.com/v1/api/danh-sach/tv-shows?limit=50&${pageParam}`;
+                const url5 = `https://phimapi.com/v1/api/danh-sach/tv-shows?limit=60&${pageParam}`;
+                const url6 = `https://phimapi.com/v1/api/danh-sach/tv-shows?limit=60&${pageParam}`;
 
                 const [res1, res2, res3, res4, res5, res6] = await Promise.all([
                     fetch(url1),
@@ -38,7 +40,7 @@ export function useData(currentPage = 1) {
                 const data4 = await res4.json();
                 const data5 = await res5.json();
                 const data6 = await res6.json();
-                console.log(data2)
+                
                 setMovies(data1.items || []);
                 setMovieSeries(data2.data?.items || []);
                 setMovieSingle(data3.data?.items || []);

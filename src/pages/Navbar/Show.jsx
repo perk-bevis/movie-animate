@@ -1,8 +1,23 @@
-import React from 'react'
-import bannerIcon from '../../assets/th1.jpg';
-
+import React, { useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useData } from '../../pages/data/fakeListfilm';
 const Show = ({ title }) => {
-  
+  const { slug } = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 60;
+  const { tvshow: movieShow, loading } = useData(currentPage);
+  console.log("movieShow", movieShow);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen text-white text-2xl">
+        Đang tải phim...
+      </div>
+    );
+  }
   return (
     <div className="bg-[#181818] text-white">
       <div className="p-4 sm:p-8 ">
@@ -13,7 +28,7 @@ const Show = ({ title }) => {
             <div className="flex flex-col md:flex-row flex-wrap gap-4 items-end">
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="movie-type" className="text-sm text-gray-400 mb-1 block">Loại phim:</label>
+                <label htmlFor="movie-type" className="text-sm text-gray-400 mb-1 block">Loại phim:</label>
                 <select id="movie-type" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">Phim Bộ</option>
                   <option className="bg-gray-800">Phim Lẻ</option>
@@ -21,7 +36,7 @@ const Show = ({ title }) => {
               </div>
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="genre" className="text-sm text-gray-400 mb-1 block">Thể loại:</label>
+                <label htmlFor="genre" className="text-sm text-gray-400 mb-1 block">Thể loại:</label>
                 <select id="genre" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">- Tất cả -</option>
                   <option className="bg-gray-800">Hành Động</option>
@@ -31,7 +46,7 @@ const Show = ({ title }) => {
               </div>
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="country" className="text-sm text-gray-400 mb-1 block">Quốc gia:</label>
+                <label htmlFor="country" className="text-sm text-gray-400 mb-1 block">Quốc gia:</label>
                 <select id="country" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">- Tất cả -</option>
                   <option className="bg-gray-800">Hàn Quốc</option>
@@ -41,7 +56,7 @@ const Show = ({ title }) => {
               </div>
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="year" className="text-sm text-gray-400 mb-1 block">Năm:</label>
+                <label htmlFor="year" className="text-sm text-gray-400 mb-1 block">Năm:</label>
                 <select id="year" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">- Tất cả -</option>
                   <option className="bg-gray-800">2024</option>
@@ -53,7 +68,7 @@ const Show = ({ title }) => {
 
               <div className="w-full md:w-auto flex flex-col sm:flex-row items-end gap-4 mt-4 md:mt-0 md:ml-auto">
                 <div className="w-full sm:w-auto">
-                  <label for="sort-by" className="text-sm text-gray-400 mb-1 block">Sắp xếp:</label>
+                  <label htmlFor="sort-by" className="text-sm text-gray-400 mb-1 block">Sắp xếp:</label>
                   <select id="sort-by" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option className="bg-gray-800">Ngày phát hành</option>
                     <option className="bg-gray-800">Ngày cập nhật</option>
@@ -65,7 +80,7 @@ const Show = ({ title }) => {
                   <div className="flex bg-gray-700 rounded-md p-1 gap-1">
                     <button className="p-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-600">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                       </svg>
                     </button>
                     <button className="p-1.5 rounded text-white bg-blue-600">
@@ -81,115 +96,23 @@ const Show = ({ title }) => {
 
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Cẩm Tú" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Cẩm Tú</h3>
-                <p className="text-gray-400 text-sm truncate">Esaret</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Cẩm Nguyệt Tàng Tâm" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Cẩm Nguyệt Tàng Tâm</h3>
-                <p className="text-gray-400 text-sm truncate">Echoes of the Heart</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Tuyết Đen" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Tuyết Đen</h3>
-                <p className="text-gray-400 text-sm truncate">Black Snow</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Hương Vị Của Biển" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Hương Vị Của Biển (Phần 2)</h3>
-                <p className="text-gray-400 text-sm truncate">Scent of The Sea (Season 2)</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim 9 Năm 1 Tình Yêu" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">9 Năm 1 Tình Yêu</h3>
-                <p className="text-gray-400 text-sm truncate">9 Years of You</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Đặt Lại" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Đặt Lại</h3>
-                <p className="text-gray-400 text-sm truncate">Reset</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim ONE: High School Heroes" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">ONE: High School Heroes</h3>
-                <p className="text-gray-400 text-sm truncate">ONE: High School Heroes</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Nam Cực Vị Thần" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Nam Cực Vị Thần</h3>
-                <p className="text-gray-400 text-sm truncate">The God of Antarctica</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Cô Gái Đến Từ Hư Vô" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Cô Gái Đến Từ Hư Vô (Phần 3)</h3>
-                <p className="text-gray-400 text-sm truncate">Girl From Nowhere (Season 3)</p>
-              </div>
-            </div>
-
-
-            <div className="group cursor-pointer">
-              <div className="overflow-hidden rounded-lg">
-                <img src={bannerIcon} alt="Poster phim Đại Phụng Đả Canh Nhân" className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-              </div>
-              <div className="mt-2">
-                <h3 className="text-white text-base font-semibold truncate">Đại Phụng Đả Canh Nhân</h3>
-                <p className="text-gray-400 text-sm truncate">Guardians of the Dafeng</p>
-              </div>
-            </div>
+            {movieShow?.map((show) =>  (
+                <div  key={show._id} className="group cursor-pointer">
+                  <Link to={`/phim/${show.slug}`}>
+                  <div className="overflow-hidden rounded-lg">
+                    <img  src={`${import.meta.env.VITE_IMG_URL}${show.poster_url}`}
+                    alt={`Poster phim ${show.name}`}
+                    className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" 
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <h3 className="text-white text-base font-semibold truncate">{show.name}</h3>
+                    <p className="text-gray-400 text-sm truncate">{show.origin_name}</p>
+                  </div>
+                  </Link>
+                </div>
+              )
+            )}
           </div>
           <div className="mt-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-sm text-gray-300">
 
