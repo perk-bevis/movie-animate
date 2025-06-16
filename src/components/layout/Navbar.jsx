@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = ( { onSearch }) => {
   const activeLink = "text-white text-base pb-1 border-b-2 border-green-500 transition-colors duration-300";
@@ -63,12 +63,18 @@ const Navbar = ( { onSearch }) => {
           </button>
         </div>
         <div className="flex items-center space-x-[10px]">
-          <button className="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+          <Link
+            to="/dang-nhap"
+            className="bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+          >
             Đăng Nhập
-          </button>
-          <button className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+          </Link>
+          <Link
+            to="/dang-ky"
+            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+          >
             Đăng Kí
-          </button>
+          </Link>
         </div>
       </div>
     </header>

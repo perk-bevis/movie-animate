@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 
 import { useData } from '../../pages/data/fakeListfilm';
 const Single = () => {
-  const { slug } = useParams();
 
   // 2. Tạo state cho việc phân trang, giống như trong App.js
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,7 +35,7 @@ const Single = () => {
             <div className="flex flex-col md:flex-row flex-wrap gap-4 items-end">
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="movie-type" className="text-sm text-gray-400 mb-1 block">Loại phim:</label>
+                <label htmlFor="movie-type" className="text-sm text-gray-400 mb-1 block">Loại phim:</label>
                 <select id="movie-type" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">Phim Bộ</option>
                   <option className="bg-gray-800">Phim Lẻ</option>
@@ -44,7 +43,7 @@ const Single = () => {
               </div>
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="genre" className="text-sm text-gray-400 mb-1 block">Thể loại:</label>
+                <label htmlFor="genre" className="text-sm text-gray-400 mb-1 block">Thể loại:</label>
                 <select id="genre" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">- Tất cả -</option>
                   <option className="bg-gray-800">Hành Động</option>
@@ -54,7 +53,7 @@ const Single = () => {
               </div>
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="country" className="text-sm text-gray-400 mb-1 block">Quốc gia:</label>
+                <label htmlFor="country" className="text-sm text-gray-400 mb-1 block">Quốc gia:</label>
                 <select id="country" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">- Tất cả -</option>
                   <option className="bg-gray-800">Hàn Quốc</option>
@@ -64,7 +63,7 @@ const Single = () => {
               </div>
 
               <div className="w-full sm:w-auto flex-grow">
-                <label for="year" className="text-sm text-gray-400 mb-1 block">Năm:</label>
+                <label htmlFor="year" className="text-sm text-gray-400 mb-1 block">Năm:</label>
                 <select id="year" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-gray-800">- Tất cả -</option>
                   <option className="bg-gray-800">2024</option>
@@ -76,7 +75,7 @@ const Single = () => {
 
               <div className="w-full md:w-auto flex flex-col sm:flex-row items-end gap-4 mt-4 md:mt-0 md:ml-auto">
                 <div className="w-full sm:w-auto">
-                  <label for="sort-by" className="text-sm text-gray-400 mb-1 block">Sắp xếp:</label>
+                  <label htmlFor="sort-by" className="text-sm text-gray-400 mb-1 block">Sắp xếp:</label>
                   <select id="sort-by" className="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option className="bg-gray-800">Ngày phát hành</option>
                     <option className="bg-gray-800">Ngày cập nhật</option>
@@ -88,7 +87,7 @@ const Single = () => {
                   <div className="flex bg-gray-700 rounded-md p-1 gap-1">
                     <button className="p-1.5 rounded text-gray-400 hover:text-white hover:bg-gray-600">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                        <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
                       </svg>
                     </button>
                     <button className="p-1.5 rounded text-white bg-blue-600">
@@ -107,7 +106,7 @@ const Single = () => {
 
             {movieSingle.map((movie) => (
               <div key={movie._id} className="group cursor-pointer">
-                <Link to={`/phim/${movie.slug}`}> 
+                <Link to={`/phim/${movie.slug}/${movie._id}`}> 
                   <div className="overflow-hidden rounded-lg">
                     <img
                       // src={movie.poster_url}

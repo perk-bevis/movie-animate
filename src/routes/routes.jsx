@@ -3,9 +3,13 @@ import Single from "../pages/Navbar/Single"
 import Show from "../pages/Navbar/Show"
 import Animates from "../pages/Navbar/Animates"
 import Football from "../pages/Navbar/Football"
-import Genre from "../pages/navbar/Genre"
+import Genre from "../pages/Navbar/Genre"
 import MovieDetailPage from "../layout/MovieDetailPage"
 import Watchingtv from "../layout/Watchingtv"
+import Actor from "../components/layout/Actor"
+import Loginpage from "../modules/auth/pages/Loginpage"
+import RegisterPage from "./modules/auth/pages/RegisterPage";
+
 const publicRouter = [
     { path: "/phim-bo", element: <Series /> },
     { path: "/phim-le", element: <Single /> },
@@ -15,10 +19,12 @@ const publicRouter = [
     { path: "/the-loai", element: <Genre /> },
     { path: "/phim/:slug/:id", element: <MovieDetailPage /> },
     { path: "/watchingtv/:slug/:tap", element: <Watchingtv /> },
+    { path: "/dien-vien/:actorSlug", element: <Actor/>}
 ]
 
 const privateRouter = [
-
+    { path: "/dang-nhap", element: <Loginpage/>},
+    { path: "/dang-nhap", element: <RegisterPage/>}
 ]
 
 export { publicRouter, privateRouter }

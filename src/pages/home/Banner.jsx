@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import bannerIcon from '../assets/th.jpg';
+import bannerIcon from '../../assets/th1.jpg';
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useData } from '../pages/data/fakeListfilm'
+import { useData } from '../data/fakeListfilm'
 import { Link } from 'react-router-dom';
 
 

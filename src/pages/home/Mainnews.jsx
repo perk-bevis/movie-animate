@@ -1,5 +1,5 @@
 import React from 'react'
-import bannerIcon from '../assets/th1.jpg';
+import bannerIcon from '../../assets/th1.jpg';
 
 const MainNews = () => {
    return(

@@ -2,34 +2,50 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../components/layout/Navbar'
 import { Link, useParams } from 'react-router-dom';
 const MovieDetailPage = () => {
-     const { slug } = useParams();
+    //Lấy giá trị slug từ URL. Ví dụ, nếu URL là /phim/cu-an-may, thì slug sẽ có giá trị là "cu-an-may".
+    const { slug } = useParams();
+    // State để lưu danh sách phim
     const [movieDetails, setMovieDetails] = useState(null);
-    const [episodes, setEpisodes] = useState([]); // State để lưu danh sách tập phim
+    // State để lưu danh sách tập phim
+    const [episodes, setEpisodes] = useState([]);
+    const [activeTab, setActiveTab] = useState('info'); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    console.log(slug)
     useEffect(() => {
+        // --- Bắt đầu hàm để tải dữ liệu chi tiết phim ---
         const fetchMovieBySlug = async () => {
+            // Bước 1: Kiểm tra xem biến 'slug' có tồn tại không. Nếu không, dừng hàm lại.
             if (!slug) return;
-            setLoading(true);
-            setError(null);
+            // Bước 2: Chuẩn bị cho việc tải dữ liệu.
+            setLoading(true);  // Bật trạng thái "đang tải" để UI có thể hiển thị thông báo.
+            setError(null); // Xóa đi các lỗi cũ từ lần tải trước.
             try {
-                // Gọi API để lấy cả thông tin phim và danh sách tập
+                // Bước 3: Thực hiện gọi API bằng hàm fetch.
+                // Dùng `await` để đợi cho đến khi có phản hồi từ server.
                 const response = await fetch(`https://phimapi.com/phim/${slug}`);
+                // Bước 4: Kiểm tra xem phản hồi từ server có thành công không (status code 200-299)
                 if (!response.ok) {
+                    // Nếu không thành công, tạo một lỗi và chuyển quyền xử lý cho khối `catch`.
                     throw new Error('Không thể tải dữ liệu phim.');
                 }
+                // Bước 5: Nếu phản hồi thành công, chuyển đổi dữ liệu từ chuỗi JSON thành một đối tượng JavaScript.
                 const data = await response.json();
+                // Bước 6: Cập nhật state của component bằng dữ liệu vừa nhận được.
+                // Việc này sẽ khiến React render lại giao diện với thông tin mới.
                 setMovieDetails(data.movie);
-                // Lưu danh sách tập phim từ server đầu tiên
+                // Cẩn thận kiểm tra xem dữ liệu tập phim có tồn tại không trước khi cập nhật state.
                 if (data.episodes && data.episodes[0] && data.episodes[0].server_data) {
                     setEpisodes(data.episodes[0].server_data);
                 }
 
             } catch (err) {
+                // Bước 7: Bắt và xử lý bất kỳ lỗi nào xảy ra trong khối `try`.
+                // Cập nhật state `error` để thông báo lỗi này có thể được hiển thị cho người dùng.
                 setError(err.message);
                 console.error("Lỗi khi fetch chi tiết phim:", err);
             } finally {
+                // Bước 8: Khối `finally` sẽ luôn được thực thi sau cùng.
+                // Tắt trạng thái "đang tải" đi, vì quá trình đã kết thúc.
                 setLoading(false);
             }
         };
@@ -48,7 +64,7 @@ const MovieDetailPage = () => {
     if (!movieDetails) {
         return <div className="text-white text-center p-10">Không tìm thấy thông tin phim.</div>;
     }
-
+    const latestReversedEpisodes = episodes.slice(-3).reverse();
     return (
         <>
             <Navbar />
@@ -67,7 +83,7 @@ const MovieDetailPage = () => {
 
                         <div className="lg:w-3/4">
                             <div className="relative bg-movie-hero rounded-lg shadow-xl p-6 md:p-10 min-h-[400px] md:min-h-[500px] flex items-end">
-                                <div className="absolute inset-0 bg-black opacity-50 rounded-lg" style={{backgroundImage: `url(${movieDetails.thumb_url})`}}></div> 
+                                <div className="absolute inset-0 bg-black opacity-50 rounded-lg" style={{ backgroundImage: `url(${movieDetails.thumb_url})` }}></div>
                                 <div className="relative z-10 flex flex-col md:flex-row gap-6">
                                     <div className="w-full md:w-1/3 lg:w-1/4 flex-shrink-0">
                                         <img src={movieDetails.thumb_url} alt="Upcoming Movie" className="rounded-lg w-full" />
@@ -82,7 +98,7 @@ const MovieDetailPage = () => {
                                         <div className="mb-2 text-sm">
                                             <span className="font-semibold">Thể Loại: </span>
                                             {movieDetails.category.map(c => c.name).join(', ')}
-                                            
+
                                         </div>
                                         <p className="text-sm text-gray-300 mb-3">Tổng số tập: <span className="font-semibold">24 Tập</span></p>
                                         <div className="flex items-center mb-4">
@@ -108,19 +124,15 @@ const MovieDetailPage = () => {
                                 </div>
                             </div>
 
-                            <div className="bg-gray-800 p-4 mt-6 rounded-lg shadow">
+                            <div className="bg-gray-800 p-4 mt-6 rounded-lg shadow flex flex-wrap">
                                 <span className="font-semibold mr-3">Tập mới nhất:</span>
-                                {/* <a href="#" className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">Tập 21</a>
-                                <a href="#" className="px-3 py-1 bg-red-600 text-white rounded">Tập 20</a>
-                                <a href="#" className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">Tập 19</a> */}
-                                {/* {episodes.map((ep, index) => {
-                                    <Link
-                                    key={index}
-                                    to={`/phim/${slug}/tap-${ep.name.replace(/\D/g, '')}`}
-                                    >
-                                    </Link>
-                                })} */}
-
+                                {latestReversedEpisodes.map((practice) => {
+                                    return (
+                                        <Link key={practice.slug} to={`/watchingtv/${slug}/tap-${practice.episode_total}`} className="px-3 py-1 text-gray-300 hover:bg-gray-700 rounded">
+                                            {practice.name}
+                                        </Link>
+                                    )
+                                })}
                             </div>
 
                             <div className="bg-gray-800 mt-6 rounded-lg shadow">
@@ -142,7 +154,7 @@ const MovieDetailPage = () => {
                                         <h3 className="text-xl font-semibold mb-2">Nội Dung Phim</h3>
                                         <h4 className="text-lg font-semibold text-red-500 mb-2">{movieDetails.name || movie.slug}</h4>
                                         <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                                           {movieDetails.content}
+                                            {movieDetails.content}
                                         </p>
                                         <div className="mb-4">
                                             <span className="font-semibold mr-2">Tags:</span>
@@ -228,7 +240,9 @@ const MovieDetailPage = () => {
                                     <a href="#" className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded">2019</a>
                                     <a href="#" className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded">2018</a>
                                     <a href="#" className="bg-gray-700 hover:bg-gray-600 text-center py-2 rounded">2017</a>
+                                    { }
                                 </div>
+
                             </div>
 
                             <div className="bg-gray-800 p-4 rounded-lg shadow">
@@ -257,204 +271,3 @@ const MovieDetailPage = () => {
 }
 
 export default MovieDetailPage
-// import React, { useEffect, useState } from 'react'
-// import Navbar from '../components/layout/Navbar'
-// import { Link, useParams } from 'react-router-dom';
-
-// const MovieDetailPage = () => {
-//   const { slug } = useParams();
-//   const [movieDetails, setMovieDetails] = useState(null);
-//   const [episodes, setEpisodes] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchMovieBySlug = async () => {
-//       if (!slug) return;
-      
-//       setLoading(true);
-//       setError(null);
-      
-//       try {
-//         const response = await fetch(`https://phimapi.com/phim/${slug}`);
-//         if (!response.ok) {
-//           throw new Error('Không thể tải dữ liệu phim.');
-//         }
-        
-//         const data = await response.json();
-//         setMovieDetails(data.movie);
-        
-//         // Lưu danh sách tập phim từ server đầu tiên
-//         if (data.episodes && data.episodes[0] && data.episodes[0].server_data) {
-//           setEpisodes(data.episodes[0].server_data);
-//         }
-//       } catch (err) {
-//         setError(err.message);
-//         console.error("Lỗi khi fetch chi tiết phim:", err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchMovieBySlug();
-//   }, [slug]);
-
-//   if (loading) {
-//     return <div className="text-white text-center p-10">Đang tải...</div>;
-//   }
-
-//   if (error) {
-//     return <div className="text-red-500 text-center p-10">Lỗi: {error}</div>;
-//   }
-
-//   if (!movieDetails) {
-//     return <div className="text-white text-center p-10">Không tìm thấy thông tin phim.</div>;
-//   }
-
-//   return (
-//     <>
-//       <Navbar />
-//       <div className='bg-gray-900 text-gray-200 font-sans'>
-//         <nav className="bg-gray-800 p-4 text-sm">
-//           <div className="container mx-auto flex items-center text-gray-400">
-//             <Link to="/" className="hover:text-white">Trang chủ</Link>
-//             <span className="mx-2">&gt;</span>
-//             <a href="#" className="hover:text-white">{movieDetails.country?.[0]?.name || 'Phim'}</a>
-//             <span className="mx-2">&gt;</span>
-//             <span className="text-white">{movieDetails.name}</span>
-//           </div>
-//         </nav>
-
-//         <div className="container mx-auto p-4">
-//           <div className="flex flex-col lg:flex-row gap-6">
-//             <div className="lg:w-3/4">
-//               <div className="relative bg-gray-800 rounded-lg shadow-xl p-6 md:p-10 min-h-[400px] md:min-h-[500px]">
-//                 <div className="flex flex-col md:flex-row gap-6">
-//                   {/* Movie Poster */}
-//                   <div className="flex-shrink-0">
-//                     <img 
-//                       src={movieDetails.poster_url || movieDetails.thumb_url} 
-//                       alt={movieDetails.name}
-//                       className="w-full md:w-64 h-auto rounded-lg shadow-lg"
-//                     />
-//                   </div>
-
-//                   {/* Movie Info */}
-//                   <div className="flex-1">
-//                     <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-//                       {movieDetails.name}
-//                     </h1>
-//                     <h2 className="text-xl text-gray-300 mb-4">
-//                       {movieDetails.origin_name}
-//                     </h2>
-
-//                     <div className="space-y-3 mb-6">
-//                       <div className="flex flex-wrap gap-2">
-//                         <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm">
-//                           {movieDetails.quality}
-//                         </span>
-//                         <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
-//                           {movieDetails.lang}
-//                         </span>
-//                         <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm">
-//                           {movieDetails.year}
-//                         </span>
-//                       </div>
-
-//                       <div className="text-gray-300">
-//                         <p><strong>Thể loại:</strong> {movieDetails.category?.map(cat => cat.name).join(', ')}</p>
-//                         <p><strong>Quốc gia:</strong> {movieDetails.country?.map(country => country.name).join(', ')}</p>
-//                         <p><strong>Đạo diễn:</strong> {movieDetails.director?.join(', ') || 'Đang cập nhật'}</p>
-//                         <p><strong>Diễn viên:</strong> {movieDetails.actor?.join(', ') || 'Đang cập nhật'}</p>
-//                         <p><strong>Thời lượng:</strong> {movieDetails.time || 'Đang cập nhật'}</p>
-//                         <p><strong>Số tập:</strong> {movieDetails.episode_total || 'Đang cập nhật'}</p>
-//                       </div>
-//                     </div>
-
-//                     <div className="mb-6">
-//                       <h3 className="text-xl font-semibold text-white mb-2">Nội dung phim</h3>
-//                       <p className="text-gray-300 leading-relaxed">
-//                         {movieDetails.content || 'Nội dung đang được cập nhật...'}
-//                       </p>
-//                     </div>
-
-//                     {/* Episodes Section */}
-//                     {episodes.length > 0 && (
-//                       <div className="mb-6">
-//                         <h3 className="text-xl font-semibold text-white mb-4">Danh sách tập phim</h3>
-//                         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2">
-//                           {episodes.map((episode, index) => (
-//                             <Link
-//                               key={index}
-//                               to={`/watch/${slug}/${episode.slug}`}
-//                               className="bg-gray-700 hover:bg-red-600 text-white text-center py-2 px-3 rounded transition-colors duration-200"
-//                             >
-//                               {episode.name}
-//                             </Link>
-//                           ))}
-//                         </div>
-//                       </div>
-//                     )}
-
-//                     {/* Watch Button */}
-//                     <div className="flex gap-4">
-//                       <Link
-//                         to={episodes.length > 0 ? `/watch/${slug}/${episodes[0].slug}` : '#'}
-//                         className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 flex items-center gap-2"
-//                       >
-//                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-//                           <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
-//                         </svg>
-//                         Xem phim
-//                       </Link>
-//                       <button className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200">
-//                         Thêm vào danh sách
-//                       </button>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Sidebar */}
-//             <div className="lg:w-1/4">
-//               <div className="bg-gray-800 rounded-lg p-6">
-//                 <h3 className="text-xl font-semibold text-white mb-4">Thông tin chi tiết</h3>
-//                 <div className="space-y-3 text-sm">
-//                   <div>
-//                     <span className="text-gray-400">Trạng thái:</span>
-//                     <span className="text-white ml-2">{movieDetails.episode_current}</span>
-//                   </div>
-//                   <div>
-//                     <span className="text-gray-400">Năm phát hành:</span>
-//                     <span className="text-white ml-2">{movieDetails.year}</span>
-//                   </div>
-//                   <div>
-//                     <span className="text-gray-400">Chất lượng:</span>
-//                     <span className="text-white ml-2">{movieDetails.quality}</span>
-//                   </div>
-//                   <div>
-//                     <span className="text-gray-400">Ngôn ngữ:</span>
-//                     <span className="text-white ml-2">{movieDetails.lang}</span>
-//                   </div>
-//                   <div>
-//                     <span className="text-gray-400">Lượt xem:</span>
-//                     <span className="text-white ml-2">{movieDetails.view || 'Đang cập nhật'}</span>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Related Movies or Ads Section */}
-//               <div className="bg-gray-800 rounded-lg p-6 mt-6">
-//                 <h3 className="text-xl font-semibold text-white mb-4">Phim liên quan</h3>
-//                 <p className="text-gray-400 text-sm">Tính năng đang được phát triển...</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
-
-// export default MovieDetailPage;

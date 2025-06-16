@@ -2,11 +2,8 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useData } from '../../pages/data/fakeListfilm';
 const Show = ({ title }) => {
-  const { slug } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 60;
-  const { tvshow: movieShow, loading } = useData(currentPage);
-  console.log("movieShow", movieShow);
+  const { currentBannerVideo: movieShow, loading } = useData(currentPage);
   const handlePageChange = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -98,7 +95,7 @@ const Show = ({ title }) => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
             {movieShow?.map((show) =>  (
                 <div  key={show._id} className="group cursor-pointer">
-                  <Link to={`/phim/${show.slug}`}>
+                  <Link to={`/phim/${show.slug}/${show._id}`}>
                   <div className="overflow-hidden rounded-lg">
                     <img  src={`${import.meta.env.VITE_IMG_URL}${show.poster_url}`}
                     alt={`Poster phim ${show.name}`}

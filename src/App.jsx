@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import Navbar from './components/layout/Navbar'
 import { publicRouter } from './routes/routes'
 import { Routes, Route } from 'react-router-dom'
-import Banner from './features/Banner'
-import MovieList from './features/MovieList'
-import MainNews from './features/Mainnews'
+import Banner from './pages/home/Banner'
+import MovieList from './pages/home/MovieList'
+import MainNews from './pages/home/Mainnews'
 import Footer from './components/layout/Footer'
 import { useData } from './pages/data/fakeListfilm'
 import Pagination from './components/ui/Pagination' 
-import Moviesearch from './features/Moviesearch'
+import Moviesearch from './pages/home/Moviesearch'
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +19,6 @@ const App = () => {
     movieSingle,
     movieAnimated,
     currentBannerVideo,
-    tvshow,
     movieSearch,
     handleSearch
   } = useData(currentPage)
