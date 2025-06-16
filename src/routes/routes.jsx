@@ -8,7 +8,7 @@ import MovieDetailPage from "../layout/MovieDetailPage"
 import Watchingtv from "../layout/Watchingtv"
 import Actor from "../components/layout/Actor"
 import Loginpage from "../modules/auth/pages/Loginpage"
-import RegisterPage from "./modules/auth/pages/RegisterPage";
+import Registerpage from "../modules/auth/pages/Registerpage"
 
 const publicRouter = [
     { path: "/phim-bo", element: <Series /> },
@@ -23,8 +23,8 @@ const publicRouter = [
 ]
 
 const privateRouter = [
-    { path: "/dang-nhap", element: <Loginpage/>},
-    { path: "/dang-nhap", element: <RegisterPage/>}
+    { path: "/dang-nhap", element: <Loginpage /> },
+    { path: "/dang-ky", element: <Registerpage /> } 
 ]
 
 export { publicRouter, privateRouter }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from './components/layout/Navbar'
-import { publicRouter } from './routes/routes'
+import { publicRouter ,privateRouter } from './routes/routes'
 import { Routes, Route } from 'react-router-dom'
 import Banner from './pages/home/Banner'
 import MovieList from './pages/home/MovieList'
@@ -9,6 +9,7 @@ import Footer from './components/layout/Footer'
 import { useData } from './pages/data/fakeListfilm'
 import Pagination from './components/ui/Pagination' 
 import Moviesearch from './pages/home/Moviesearch'
+
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,6 +56,11 @@ const App = () => {
           {publicRouter.map((route, index) => (
             <Route key={index} path={route.path} element={route.element} />
           ))}
+
+          {privateRouter.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+
         </Routes>
       </div>
     </>
