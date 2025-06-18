@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import bannerIcon from '../assets/th1.jpg';
+import bannerIcon from '../../../assets/th1.jpg';
 
 
 const Watchingtv = () => {

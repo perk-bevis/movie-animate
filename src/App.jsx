@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { useData } from './pages/data/fakeListfilm';
-import { publicRouter, privateRouter } from './routes/routes';
+import React, { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import { useData } from "./data/fakeListfilm";
+import { publicRouter, privateRouter } from "./routes/routes";
 
 // Import các component và layout mới
-import MainLayout from './layout/MainLayout';
-import Homepage from './pages/home/Homepage';
+import MainLayout from "./layout/MainLayout";
+import Homepage from "./modules/home/pages/Homepage";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,16 +17,16 @@ const App = () => {
     movieAnimated,
     currentBannerVideo,
     movieSearch,
-    handleSearch
+    handleSearch,
   } = useData(currentPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <div className='bg-black text-white min-h-screen font-sans'>
+    <div className="bg-black text-white min-h-screen font-sans">
       <Routes>
         <Route element={<MainLayout onSearch={handleSearch} />}>
           <Route

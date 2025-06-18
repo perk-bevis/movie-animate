@@ -1,9 +1,9 @@
-import React from 'react';
-import Banner from './Banner';
-import MovieList from './MovieList';
-import MainNews from './Mainnews';
-import Moviesearch from './Moviesearch';
-import Pagination from '../../components/ui/Pagination';
+import React from "react";
+import Banner from "../components/Banner";
+import MovieList from "../../movie/components/MovieList";
+import MainNews from "../components/Mainnews";
+import Moviesearch from "../../movie/components/Moviesearch";
+import Pagination from "../../../components/ui/Pagination";
 const Homepage = ({
   currentBannerVideo,
   movieSearch,
@@ -13,7 +13,7 @@ const Homepage = ({
   movieAnimated,
   currentPage,
   totalPages,
-  handlePageChange
+  handlePageChange,
 }) => {
   return (
     <>

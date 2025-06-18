@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button, Dropdown, Modal, Space } from 'antd';
 import { FileAddOutlined, KeyOutlined, LoginOutlined, UserOutlined } from "@ant-design/icons";
-import confirm from "antd/es/modal/confirm";
 
 const Navbar = ({ onSearch }) => {
   const activeLink = "text-white text-base pb-1 border-b-2 border-green-500 transition-colors duration-300";

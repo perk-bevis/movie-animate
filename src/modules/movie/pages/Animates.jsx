@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { useData } from '../../pages/data/fakeListfilm';
-const Show = ({ title }) => {
+import React, { useState } from 'react'
+import { useData } from '../../../data/fakeListfilm';
+
+const Animates = () => {
+
   const [currentPage, setCurrentPage] = useState(1);
-  const { currentBannerVideo: movieShow, loading } = useData(currentPage);
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const { movieAnimated, loading } = useData(currentPage);
+  console.log("hoạt hình",movieAnimated)
+  // 2. Xử lý trạng thái loading
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-white text-2xl">
-        Đang tải phim...
+      <div className="bg-[#181818] text-white min-h-screen flex justify-center items-center">
+        <p className="text-2xl">Đang tải phim...</p>
       </div>
     );
   }
@@ -93,23 +92,19 @@ const Show = ({ title }) => {
 
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
-            {movieShow?.map((show) =>  (
-                <div  key={show._id} className="group cursor-pointer">
-                  <Link to={`/phim/${show.slug}/${show._id}`}>
+            {movieAnimated.map((animate) => {
+              return (
+                <div key={animate._id} className="group cursor-pointer">
                   <div className="overflow-hidden rounded-lg">
-                    <img  src={`${import.meta.env.VITE_IMG_URL}${show.poster_url}`}
-                    alt={`Poster phim ${show.name}`}
-                    className="w-full h-auto object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" 
-                    />
+                    <img src={`${import.meta.env.VITE_IMG_URL}${animate.poster_url}`} alt="Poster phim Cẩm Tú" className="w-full h-[418px] object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
                   </div>
                   <div className="mt-2">
-                    <h3 className="text-white text-base font-semibold truncate">{show.name}</h3>
-                    <p className="text-gray-400 text-sm truncate">{show.origin_name}</p>
+                    <h3 className="text-white text-base font-semibold truncate">{animate.name}</h3>
+                    <p className="text-gray-400 text-sm truncate">{animate.origin_name}</p>
                   </div>
-                  </Link>
                 </div>
               )
-            )}
+            })}
           </div>
           <div className="mt-8 flex flex-col sm:flex-row justify-center sm:justify-between items-center text-sm text-gray-300">
 
@@ -135,4 +130,4 @@ const Show = ({ title }) => {
   )
 }
 
-export default Show
+export default Animates

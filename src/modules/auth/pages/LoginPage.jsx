@@ -1,19 +1,10 @@
-// Trang đăng nhập
-import React, { useState } from 'react';
-
 import { auth, provider } from '../../../firebase/FilebaseConfig';
 import { signInWithPopup } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
+import Loginform from '../components/Loginform';
+
 
 const Loginpage = () => {
-    // Thêm state để quản lý hiệu ứng hover cho nút bấm
-    const [isButtonHovered, setIsButtonHovered] = useState(false);
-
-    // Định nghĩa các kiểu style cho nút bấm
-    const buttonStyle = {
-        backgroundColor: isButtonHovered ? '#854D0E' : '#A16207',
-        transition: 'background-color 0.2s'
-    };
     // hook 
     const navigate = useNavigate()
 
@@ -65,50 +56,7 @@ const Loginpage = () => {
                     </svg>
                     Đăng nhập bằng Google
                 </button>
-
-                <form action="#" method="POST">
-                    <div className="mb-4">
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email" className="w-full bg-[#333] border border-gray-600 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        <div className='mt-1 text-red-400'>Email không được để trống</div>
-                    </div>
-
-                    <div className="mb-4">
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">Password</label>
-                        <input status="error" type="password" id="password" name="password" placeholder="••••••••" className="w-full bg-[#333] border border-gray-600 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        <div className='mt-1 text-red-400'>Password không được để trống</div>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-6">
-                        <div className="flex items-center">
-                            <input status="error" id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 bg-gray-600 border-gray-500 rounded text-blue-600 focus:ring-blue-500" />
-                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">Ghi nhớ</label>
-                        </div>
-                        <div className="text-sm">
-                            <a href="#" className="font-medium text-gray-300 hover:text-white hover:underline">Quên mật khẩu?</a>
-                        </div>
-                    </div>
-
-                    <div>
-                        <button 
-                            type="submit" 
-                            className="w-full text-white font-bold py-3 px-4 rounded-lg"
-                            style={buttonStyle}
-                            onMouseOver={() => setIsButtonHovered(true)}
-                            onMouseOut={() => setIsButtonHovered(false)}
-                        >
-                            Đăng nhập
-                        </button>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-6 mt-1">
-                        
-                        <div className="text-sm">
-                            <a href="#" className="font-medium text-gray-300 hover:text-white hover:underline">Bạn chưa có tài khoản?</a>
-                        </div>
-                    </div>
-
-                </form>
+                <Loginform/>
             </div>
         </div>
     );
