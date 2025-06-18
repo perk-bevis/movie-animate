@@ -1,6 +1,10 @@
 // Trang đăng nhập
 import React, { useState } from 'react';
 
+import { auth, provider } from '../../../firebase/FilebaseConfig';
+import { signInWithPopup } from 'firebase/auth';
+import { Link, useNavigate } from 'react-router-dom';
+
 const Loginpage = () => {
     // Thêm state để quản lý hiệu ứng hover cho nút bấm
     const [isButtonHovered, setIsButtonHovered] = useState(false);
@@ -10,13 +14,39 @@ const Loginpage = () => {
         backgroundColor: isButtonHovered ? '#854D0E' : '#A16207',
         transition: 'background-color 0.2s'
     };
+    // hook 
+    const navigate = useNavigate()
 
+    // đăng nhập vs api
+
+    // đăng nhập với google
+    const signinWidthGoogle = () => {
+        signInWithPopup(auth ,provider)
+        .then(response =>{
+            const userLocal = {
+                email: response.user.email,
+                userName: response.user.displayName,
+                image: response.user.photoURL,
+                userId: response.user.uid
+            }
+
+            // lưu thông tin lên local
+            localStorage.setItem("userLocal", JSON.stringify(userLocal))
+            // chuyển hướng về trang home
+            navigate("/")
+        })
+        .catch(error =>{
+            console.log(error)
+        })
+    }
   return (
         <div className="min-h-screen bg-[#121212] flex flex-col justify-center items-center p-4">
 
             <div className="w-full max-w-md mb-4">
                 <p className="text-sm text-gray-400">
-                    <a href="#" className="hover:text-white">🏠 Codemetech</a>
+                    <Link to="/" className="hover:text-white">
+                    🏠 Codemetech
+                    </Link>
                     <span className="mx-2">&gt;</span>
                     <span>Đăng Nhập</span>
                 </p>
@@ -26,7 +56,7 @@ const Loginpage = () => {
                 
                 <h1 className="text-3xl font-bold text-white text-center mb-6">Đăng Nhập</h1>
 
-                <button className="w-full bg-white text-gray-800 font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors hover:bg-gray-200 mb-6">
+                <button onClick={signinWidthGoogle} className="w-full bg-white text-gray-800 font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors hover:bg-gray-200 mb-6">
                     <svg className="w-5 h-5" viewBox="0 0 48 48">
                         <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
                         <path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path>
@@ -40,16 +70,18 @@ const Loginpage = () => {
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Email</label>
                         <input type="email" id="email" name="email" placeholder="Email" className="w-full bg-[#333] border border-gray-600 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <div className='mt-1 text-red-400'>Email không được để trống</div>
                     </div>
 
                     <div className="mb-4">
                         <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">Password</label>
-                        <input type="password" id="password" name="password" placeholder="••••••••" className="w-full bg-[#333] border border-gray-600 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <input status="error" type="password" id="password" name="password" placeholder="••••••••" className="w-full bg-[#333] border border-gray-600 text-white rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        <div className='mt-1 text-red-400'>Password không được để trống</div>
                     </div>
 
                     <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center">
-                            <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 bg-gray-600 border-gray-500 rounded text-blue-600 focus:ring-blue-500" />
+                            <input status="error" id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 bg-gray-600 border-gray-500 rounded text-blue-600 focus:ring-blue-500" />
                             <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-300">Ghi nhớ</label>
                         </div>
                         <div className="text-sm">
@@ -69,10 +101,10 @@ const Loginpage = () => {
                         </button>
                     </div>
 
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between mb-6 mt-1">
                         
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-gray-300 hover:text-white hover:underline">Quên mật khẩu?</a>
+                            <a href="#" className="font-medium text-gray-300 hover:text-white hover:underline">Bạn chưa có tài khoản?</a>
                         </div>
                     </div>
 
