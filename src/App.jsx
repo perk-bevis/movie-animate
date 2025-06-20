@@ -9,7 +9,6 @@ import Homepage from "./modules/home/pages/Homepage";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  console.log(currentPage)
   const totalPages = 60;
   const {
     movies,

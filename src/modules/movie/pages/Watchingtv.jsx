@@ -16,7 +16,7 @@ const Watchingtv = () => {
       if (!slug) return;
       setLoading(true);
       setError(null);
-      
+
       try {
         // Gọi API để lấy thông tin phim và danh sách tập
         const response = await fetch(`https://phimapi.com/phim/${slug}`);
@@ -24,14 +24,14 @@ const Watchingtv = () => {
         if (!response.ok) {
           throw new Error('Không thể tải dữ liệu phim.');
         }
-        
+
         const data = await response.json();
         setMovieDetails(data.movie);
-        
+
         // Lưu danh sách tập phim
         if (data.episodes && data.episodes[0] && data.episodes[0].server_data) {
           setEpisodes(data.episodes[0].server_data);
-          
+
           // Tìm tập hiện tại dựa trên episode param
           if (episode) {
             const episodeNumber = episode.replace('tap-', '');
@@ -53,6 +53,12 @@ const Watchingtv = () => {
 
     fetchMovieData();
   }, [slug, episode]);
+  // kiểm tra xem sdk fb đã đc tải chưa
+  useEffect(() => {
+    if (window.FB && movieDetails) {
+      window.FB.XFBML.parse();
+    }
+  }, [movieDetails, currentEpisode]);
 
   const handleEpisodeSelect = (selectedEpisode) => {
     setCurrentEpisode(selectedEpisode);
@@ -60,8 +66,11 @@ const Watchingtv = () => {
 
   if (loading) {
     return (
-      <div className="bg-black text-gray-300 font-sans min-h-screen flex items-center justify-center">
-        <div className="text-white text-center p-10">Đang tải...</div>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p>Đang tải...</p>
+        </div>
       </div>
     );
   }
@@ -81,6 +90,8 @@ const Watchingtv = () => {
       </div>
     );
   }
+
+  const commentUrl = "https://developers.facebook.com/docs/plugins/comments#configurator";
 
   return (
     <div className="bg-black text-gray-300 font-sans min-h-screen">
@@ -121,8 +132,7 @@ const Watchingtv = () => {
 
             {/* Player Controls */}
             <div className="mt-4 p-4 bg-yellow-900/30 border-l-4 border-yellow-500 rounded text-sm">
-              <p>- Hãy thử đổi sang server khác (nếu có) hoặc tải lại trang nếu bạn gặp lỗi, giật/lag khi xem phim.</p>
-              <p>- Tham gia nhóm <a href="#" className="text-sky-400 font-semibold">Telegram</a> của chúng mình để được hỗ trợ kịp thời khi gặp lỗi nha.</p>
+              <p>Xin chào! Cảm ơn bạn đã ghé thăm website xem phim của chúng tôi. Chúc bạn có trải nghiệm xem phim thật thú vị!</p>
             </div>
 
             <div className="mt-4 flex flex-wrap gap-y-2 justify-between items-center text-sm">
@@ -130,13 +140,13 @@ const Watchingtv = () => {
                 <button className="flex items-center gap-1.5 hover:text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
-                  </svg> 
+                  </svg>
                   Phóng to
                 </button>
                 <button className="flex items-center gap-1.5 hover:text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 3v1.5M3 21v-1.5m18 0v1.5M21 3v1.5M3 12h18M3 12a9 9 0 0118 0M3 12a9 9 0 0018 0m-9 6.75h.008v.008H12v-.008z" />
-                  </svg> 
+                  </svg>
                   Báo Lỗi
                 </button>
               </div>
@@ -144,16 +154,16 @@ const Watchingtv = () => {
                 <button className="flex items-center gap-1.5 hover:text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                  </svg> 
+                  </svg>
                   Tắt đèn
                 </button>
                 {/* Next Episode Button */}
                 {episodes.length > 0 && currentEpisode && (
-                  <Link 
+                  <Link
                     to={`/watchingtv/${slug}/tap-${parseInt(currentEpisode.name.replace(/\D/g, '')) + 1}`}
                     className="bg-zinc-700 px-4 py-2 rounded-md hover:bg-zinc-600 flex items-center gap-2"
                   >
-                    Tập Tiếp 
+                    Tập Tiếp
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                     </svg>
@@ -188,11 +198,10 @@ const Watchingtv = () => {
                           key={index}
                           to={`/watchingtv/${slug}/tap-${ep.name.replace(/\D/g, '')}`}
                           onClick={() => handleEpisodeSelect(ep)}
-                          className={`px-4 py-1.5 rounded text-sm transition-colors ${
-                            currentEpisode?.name === ep.name
+                          className={`px-4 py-1.5 rounded text-sm transition-colors ${currentEpisode?.name === ep.name
                               ? 'bg-red-600 text-white font-semibold'
                               : 'bg-zinc-700 hover:bg-zinc-600 text-gray-300'
-                          }`}
+                            }`}
                         >
                           {ep.name}
                         </Link>
@@ -210,7 +219,7 @@ const Watchingtv = () => {
               </h1>
               <p className="text-sm text-gray-400">{movieDetails.name} - {movieDetails.origin_name} (HD - Vietsub)</p>
               <p className="text-sm text-gray-400 mb-3">{currentEpisode?.name || 'Tập 01'}</p>
-              
+
               <div className="flex items-center mb-4">
                 <div className="flex text-yellow-400 gap-0.5">
                   {[...Array(5)].map((_, i) => (
@@ -221,17 +230,15 @@ const Watchingtv = () => {
                 </div>
                 <span className="ml-2 text-sm text-gray-400">(8.0 điểm / 145 lượt)</span>
               </div>
-              
+
               <div className="flex items-center gap-2 mb-4">
                 <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 text-sm rounded flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
-                    <path d="M1 8.25a1.25 1.25 0 112.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM11 8.25a1.25 1.25 0 012.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM5 8.25a1.25 1.25 0 012.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5zM15 8.25a1.25 1.25 0 012.5 0v7.5a1.25 1.25 0 11-2.5 0v-7.5z" />
-                  </svg>
+                  <i className="fas fa-thumbs-up mr-2"></i>
                   Thích 0
                 </button>
                 <button className="bg-sky-500 hover:bg-sky-600 text-white px-3 py-1 text-sm rounded">Chia sẻ</button>
               </div>
-              
+
               <div className="text-sm text-gray-300 leading-relaxed border-t border-zinc-700 pt-4">
                 <p>
                   <strong>{movieDetails.name}</strong><br />
@@ -245,22 +252,28 @@ const Watchingtv = () => {
                   )}
                 </p>
               </div>
-              
+
               <div className="flex items-center gap-3 mt-4">
                 <span className="text-sm font-semibold">Chia sẻ:</span>
-                <a href="#" className="w-8 h-8 flex items-center justify-center bg-zinc-700 hover:bg-blue-600 rounded-full transition-colors"> 
+                <a href="#" className="w-8 h-8 flex items-center justify-center bg-zinc-700 hover:bg-blue-600 rounded-full transition-colors">
                   <svg fill="currentColor" className="w-4 h-4 text-white" viewBox="0 0 16 16">
                     <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
                   </svg>
                 </a>
-                <a href="#" className="w-8 h-8 flex items-center justify-center bg-zinc-700 hover:bg-sky-500 rounded-full transition-colors"> 
+                <a href="#" className="w-8 h-8 flex items-center justify-center bg-zinc-700 hover:bg-sky-500 rounded-full transition-colors">
                   <svg fill="currentColor" className="w-4 h-4 text-white" viewBox="0 0 16 16">
                     <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
                   </svg>
                 </a>
               </div>
-
-              
+            </div>
+            <div className="mt-4 bg-white p-4 rounded">
+              <div
+                className="fb-comments"
+                data-href={commentUrl}
+                data-width="100%"
+                data-numposts="5"
+              ></div>
             </div>
           </main>
 

@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
 import { useData } from '../../../data/fakeListfilm';
+import { Link } from 'react-router-dom';
 
 const Animates = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const { movieAnimated, loading } = useData(currentPage);
-  console.log("hoạt hình",movieAnimated)
   // 2. Xử lý trạng thái loading
   if (loading) {
     return (
-      <div className="bg-[#181818] text-white min-h-screen flex justify-center items-center">
-        <p className="text-2xl">Đang tải phim...</p>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p>Đang tải...</p>
+        </div>
       </div>
     );
   }
@@ -95,13 +98,15 @@ const Animates = () => {
             {movieAnimated.map((animate) => {
               return (
                 <div key={animate._id} className="group cursor-pointer">
-                  <div className="overflow-hidden rounded-lg">
-                    <img src={`${import.meta.env.VITE_IMG_URL}${animate.poster_url}`} alt="Poster phim Cẩm Tú" className="w-full h-[418px] object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
-                  </div>
-                  <div className="mt-2">
-                    <h3 className="text-white text-base font-semibold truncate">{animate.name}</h3>
-                    <p className="text-gray-400 text-sm truncate">{animate.origin_name}</p>
-                  </div>
+                  <Link to={`/phim/${animate.slug}/${animate._id}`}>
+                    <div className="overflow-hidden rounded-lg">
+                      <img src={`${import.meta.env.VITE_IMG_URL}${animate.poster_url}`} alt="Poster phim Cẩm Tú" className="w-full h-[418px] object-cover rounded-lg transform transition-transform duration-300 ease-in-out group-hover:scale-105" />
+                    </div>
+                    <div className="mt-2">
+                      <h3 className="text-white text-base font-semibold truncate">{animate.name}</h3>
+                      <p className="text-gray-400 text-sm truncate">{animate.origin_name}</p>
+                    </div>
+                  </Link>
                 </div>
               )
             })}

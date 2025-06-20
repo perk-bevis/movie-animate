@@ -7,6 +7,7 @@ import MovieDetailPage from "../modules/movie/pages/MovieDetailPage";
 import Watchingtv from "../modules/movie/pages/Watchingtv";
 import Loginpage from "../modules/auth/pages/Loginpage";
 import Registerpage from "../modules/auth/pages/Registerpage";
+import MoviesByYearPage from "../modules/movie/pages/MoviesByYearPage";
 
 const publicRouter = [
   { path: "/phim-bo", element: <Series /> },
@@ -16,6 +17,7 @@ const publicRouter = [
   { path: "/the-thao", element: <Football /> },
   { path: "/phim/:slug/:id", element: <MovieDetailPage /> },
   { path: "/watchingtv/:slug/:tap", element: <Watchingtv /> },
+  { path: "/nam/:year", element:<MoviesByYearPage />}
 ];
 
 const privateRouter = [

@@ -1,28 +1,25 @@
-import React, { useState } from "react"; // Bỏ useEffect vì không cần nữa
+import React, { useEffect, useState } from "react"; // Bỏ useEffect vì không cần nữa
 import { Link, useParams } from "react-router-dom";
 
 // ====> FIX 1: THÊM 2 DÒNG IMPORT QUAN TRỌNG <====
 import { useData } from "../../../data/fakeListfilm";
-import Pagination from "../../../components/ui/Pagination";
 
 const Series = () => {
-  // 2. Tạo state cho việc phân trang, giống như trong App.js
-  const [currentPage, setCurrentPage] = useState(1);
+  const { movieSeries, setMovieSeries } = useData("");
+  const [loading ,setLoading] = useState(true)
+  useEffect(() => {
 
-  // 3. Gọi hook useData để lấy dữ liệu PHIM BỘ và trạng thái LOADING
-  // Chúng ta chỉ cần `movieSeries` và `loading` từ hook này
-  const { movieSeries, loading } = useData(currentPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  // 4. Xử lý trạng thái đang tải (loading)
+    if (movieSeries && movieSeries.length > 0) {
+      setLoading(false);
+    }
+  }, [movieSeries]);
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-white text-2xl">
-        Đang tải phim...
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-white text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+          <p>Đang tải...</p>
+        </div>
       </div>
     );
   }

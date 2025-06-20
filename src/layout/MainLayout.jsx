@@ -1,14 +1,16 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-const MainLayout = () => {
+const MainLayout = ({ onSearch }) => {
   return (
     <div>
-      <Navbar />
+      <Navbar onSearch={onSearch}/>
       <main>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 };
