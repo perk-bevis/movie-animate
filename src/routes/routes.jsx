@@ -5,9 +5,9 @@ import Animates from "../modules/movie/pages/Animates";
 import Football from "../modules/movie/pages/Football";
 import MovieDetailPage from "../modules/movie/pages/MovieDetailPage";
 import Watchingtv from "../modules/movie/pages/Watchingtv";
-import Loginpage from "../modules/auth/pages/Loginpage";
 import Registerpage from "../modules/auth/pages/Registerpage";
 import MoviesByYearPage from "../modules/movie/pages/MoviesByYearPage";
+import Loginpage from "../modules/auth/pages/LoginPage";
 
 const publicRouter = [
   { path: "/phim-bo", element: <Series /> },
