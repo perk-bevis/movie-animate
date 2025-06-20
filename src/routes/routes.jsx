@@ -5,9 +5,9 @@ import Animates from "../modules/movie/pages/Animates";
 import Football from "../modules/movie/pages/Football";
 import MovieDetailPage from "../modules/movie/pages/MovieDetailPage";
 import Watchingtv from "../modules/movie/pages/Watchingtv";
-import Registerpage from "../modules/auth/pages/Registerpage";
 import MoviesByYearPage from "../modules/movie/pages/MoviesByYearPage";
 import Loginpage from "../modules/auth/pages/LoginPage";
+import Registerpage from "../modules/auth/pages/RegisterPage";
 
 const publicRouter = [
   { path: "/phim-bo", element: <Series /> },
@@ -22,7 +22,7 @@ const publicRouter = [
 
 const privateRouter = [
   { path: "/dang-nhap", element: <Loginpage /> },
-  { path: "/dang-ky", element: <Registerpage /> },
+  { path: "/dang-ky", element: < Registerpage /> },
 ];
 
 export { publicRouter, privateRouter };
