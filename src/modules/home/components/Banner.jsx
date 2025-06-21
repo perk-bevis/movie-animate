@@ -76,11 +76,10 @@ const Banner = ({ data }) => {
     );
   }
 
-  const backgroundImageUrl = selectedMovie.poster_url || selectedMovie.thumb_url || "https://images.thedirect.com/media/photos/witcher-s4-poster.jpg";
-  const logoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/The_Witcher_logo.svg/1280px-The_Witcher_logo.svg.png";
+  const backgroundImageUrl = selectedMovie.poster_url || selectedMovie.thumb_url;
 
   return (
-    <div className="relative bg-black text-white font-sans" 
+    <div className="relative text-white font-sans overflow-hidden" 
       style={{
         backgroundImage: `url(${import.meta.env.VITE_IMG_URL}${selectedMovie.poster_url || selectedMovie.thumb_url || bannerIcon})`
       }}>
@@ -88,7 +87,7 @@ const Banner = ({ data }) => {
         <img
           src={`${import.meta.env.VITE_IMG_URL}${backgroundImageUrl}`}
           alt="Background"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-[10%] object-contain opacity-40"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent"></div>
@@ -106,7 +105,7 @@ const Banner = ({ data }) => {
               <i className="far fa-star text-gray-400"></i>
             </div>
           </div>
-          <div className="flex items-center flex-wrap space-x-4 mt-4 text-sm md:text-base text-gray-300">
+          <div className="flex items-center flex-wrap space-x-4 mt-4 text-sm md:text-base text-gray-300 ">
             {selectedMovie.category && selectedMovie.category.slice(0, 3).map((cat, index) => (
               <React.Fragment key={cat.id || index}>
                 <span>{cat.name}</span>
@@ -118,7 +117,7 @@ const Banner = ({ data }) => {
           </div>
           <div className="flex items-center space-x-3 mt-6">
             <Link to={`/phim/${selectedMovie.slug}/${selectedMovie._id}`} key={selectedMovie._id}>
-              <button className="flex items-center justify-center bg-white text-black px-6 py-2 rounded font-bold hover:bg-gray-200 transition">
+              <button className="flex items-center justify-center bg-green-500 text-white px-6 py-2 rounded font-bold hover:bg-gray-200 transition">
                 <i className="fas fa-play mr-2"></i> Play
               </button>
             </Link>
@@ -146,11 +145,11 @@ const Banner = ({ data }) => {
                 className="cursor-pointer group"
                 onClick={() => handleMovieClick(movie, index)}
               >
-                <div className={currentIndex === index ? 'border-2 border-white rounded-md p-0.5' : 'p-0.5'}>
+                <div className={currentIndex === index ? ' rounded-md p-0.5' : 'p-0.5'}>
                   <img
                     src={`${import.meta.env.VITE_IMG_URL}${movie.thumb_url}`}
                     alt={movie.name}
-                    className="w-full h-auto rounded transform group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-[300px] object-cover rounded transform group-hover:scale-105 transition-transform duration-300 "
                   />
                 </div>
                 <p className={`text-center mt-2 text-sm ${currentIndex === index ? 'text-white font-bold' : 'text-gray-400'}`}>

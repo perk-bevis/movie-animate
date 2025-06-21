@@ -70,7 +70,7 @@ const MoviesByYearPage = () => {
   return (
     <div className="min-h-screen bg-gray-900">
       <Navbar />
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-20 md:pt-28 ">
         <div className="mb-8">
           <nav className="text-sm text-gray-400 mb-4">
             <Link to="/" className="hover:text-white">CodeMetech</Link>
